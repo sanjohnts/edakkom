@@ -145,7 +145,7 @@ function Menu({ open, onClose }: { open: boolean; onClose: () => void }) {
         </ul>
         <div className="p-4">
           <Link to="/contribute" onClick={onClose} className="group relative block overflow-hidden rounded-2xl text-ivory">
-            <img src="/images/thumb/karkidaka-theyyam-paddy.webp" alt="" className="absolute inset-0 size-full object-cover" />
+            <img src="/images/thumb/karkidaka-theyyam-paddy.webp" alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
             <span className="absolute inset-0 bg-gradient-to-r from-coal/85 to-coal/30" />
             <span className="relative flex items-center justify-between gap-4 p-5">
               <span>

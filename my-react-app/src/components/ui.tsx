@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode, type ElementType } from 'react';
 import { Link } from 'react-router-dom';
 import { useLang, type L } from '../lib/i18n';
-import { img, thumb } from '../lib/images';
+import { img, isLocal, mid, thumb } from '../lib/images';
 import { STATUS_HELP, STATUS_LABEL, type Status } from '../data/site';
 
 /** Small caps eyebrow, e.g. "01 · THE TOWN" */
@@ -146,6 +146,7 @@ export function Photo({
   fallback,
   archival,
   eager,
+  sizes = '100vw',
 }: {
   src: string;
   alt: string;
@@ -154,16 +155,23 @@ export function Photo({
   fallback?: string;
   archival?: boolean;
   eager?: boolean;
+  /** How wide the photo shows on screen, so the browser picks the right file. */
+  sizes?: string;
 }) {
   const [current, setCurrent] = useState(src);
   useEffect(() => setCurrent(src), [src]);
   const url = size === 'thumb' ? thumb(current) : img(current);
+  // Full-size photos come in 1024px and 1600px versions: phones take the smaller one.
+  const srcSet = size === 'full' && isLocal(current) ? `${mid(current)} 1024w, ${img(current)} 1600w` : undefined;
   return (
     <img
       src={url}
+      srcSet={srcSet}
+      sizes={srcSet ? sizes : undefined}
       alt={alt}
       loading={eager ? 'eager' : 'lazy'}
-      decoding="async"
+      {...(eager ? { fetchpriority: 'high' } : {})}
+      decoding={eager ? undefined : 'async'}
       onError={() => fallback && current !== fallback && setCurrent(fallback)}
       className={`${archival || current.startsWith('old-') ? 'archival' : ''} ${className}`}
     />

@@ -2,7 +2,8 @@ import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLang } from '../lib/i18n';
 import { useSeo } from '../lib/seo';
-import { AERIAL, AERIAL_CREDIT, FALLBACK_HERO, img } from '../lib/images';
+import { AERIAL, AERIAL_CREDIT, AERIAL_MOBILE, FALLBACK_HERO, img, mid } from '../lib/images';
+import { HERO_PLACEHOLDER } from '../data/hero-placeholder';
 import { PHOTOS, photoById } from '../data/photos';
 import { NEWS, PAIRS } from '../data/culture';
 import { DIRECTORY, LIBRARIES, RELIGIOUS } from '../data/places';
@@ -93,13 +94,31 @@ export default function Home() {
     <>
       {/* ——— Hero card ——— */}
       <section className="p-3 sm:p-4">
-        <div className="relative flex min-h-[calc(100svh-2rem)] flex-col justify-end overflow-hidden rounded-[var(--radius-card)] bg-coal text-ivory">
-          <img
-            src={heroOk ? img(AERIAL) : img(FALLBACK_HERO)}
-            onError={() => setHeroOk(false)}
-            alt={t({ en: 'Edakkom from above', ml: 'ആകാശത്തു നിന്ന് എടക്കോം' })}
-            className={`cinematic olive-tone absolute inset-y-0 left-0 h-full w-full object-cover ${heroOk ? 'lg:w-[134%] lg:max-w-none lg:object-[50%_58%]' : ''}`}
-          />
+        <div
+          className="relative flex min-h-[calc(100svh-2rem)] flex-col justify-end overflow-hidden rounded-[var(--radius-card)] bg-coal bg-cover bg-[55%_center] text-ivory"
+          // Blurred 1 KB preview: shows the photo's colours instantly while the real one loads.
+          style={heroOk ? { backgroundImage: `url(${HERO_PLACEHOLDER})` } : undefined}
+        >
+          {heroOk ? (
+            <picture>
+              {/* Phones get a tall crop centred on the church (~110 KB instead of 450 KB). */}
+              <source media="(max-width: 640px)" srcSet={AERIAL_MOBILE} />
+              <source media="(max-width: 1023px)" srcSet={mid(AERIAL)} />
+              <img
+                src={img(AERIAL)}
+                onError={() => setHeroOk(false)}
+                alt={t({ en: 'Edakkom from above', ml: 'ആകാശത്തു നിന്ന് എടക്കോം' })}
+                {...{ fetchpriority: 'high' }}
+                className="cinematic olive-tone absolute inset-y-0 left-0 h-full w-full object-cover lg:w-[134%] lg:max-w-none lg:object-[50%_58%]"
+              />
+            </picture>
+          ) : (
+            <img
+              src={img(FALLBACK_HERO)}
+              alt={t({ en: 'Edakkom from above', ml: 'ആകാശത്തു നിന്ന് എടക്കോം' })}
+              className="cinematic olive-tone absolute inset-y-0 left-0 h-full w-full object-cover"
+            />
+          )}
           {heroOk && AERIAL_CREDIT && (
             <p className="absolute right-5 bottom-4 z-10 text-[0.68rem] text-ivory/70">
               {t({ en: 'Photo', ml: 'ഫോട്ടോ' })}: {AERIAL_CREDIT}

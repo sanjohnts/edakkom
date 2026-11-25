@@ -1,37 +1,75 @@
-// Runs after `vite build`. For every page in src/data/seo.json it writes
+// Runs after `vite build` and the SSR build (dist-ssr/). For every page in
+// src/data/seo.json it renders the real React page to HTML and writes
 // dist/<page>/index.html with that page's own <title>, description,
-// canonical URL and Open Graph tags, plus crawlable text and links inside
-// #root (React replaces it on load). Also writes sitemap.xml and 404.html.
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+// canonical URL and Open Graph tags. Phones then paint the finished page
+// straight from the HTML, before any JavaScript runs; React "hydrates" it.
+// Also writes sitemap.xml, 404.html and app.html (an empty shell used for
+// pages that are not prerendered, such as /admin).
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { Writable } from 'node:stream';
+import { renderToPipeableStream } from 'react-dom/server';
+
+const { app } = await import(pathToFileURL(join(process.cwd(), 'dist-ssr/entry-server.js')).href);
 
 const seo = JSON.parse(readFileSync('src/data/seo.json', 'utf8'));
-const template = readFileSync('dist/index.html', 'utf8');
+const shell = readFileSync('dist/index.html', 'utf8');
 const site = seo.site;
 const routes = seo.routes;
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-const nav = Object.entries(routes)
-  .map(([path, r]) => `<li><a href="${path}">${esc(r.title.split('|')[0].trim())}</a></li>`)
-  .join('');
+// Preload the two Malayalam font files every page needs first (body + headings).
+const fonts = readdirSync('dist/assets').filter((f) =>
+  /^noto-(sans|serif)-malayalam-malayalam-400-normal-.*\.woff2$/.test(f),
+);
+const fontPreloads = fonts
+  .map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin />`)
+  .join('\n    ');
+const template = shell.replace('</head>', `    ${fontPreloads}\n  </head>`);
 
-function render(path, r) {
+/** Render one URL to HTML, waiting for lazy-loaded pages to finish. */
+function render(url) {
+  return new Promise((resolve, reject) => {
+    let html = '';
+    const { pipe } = renderToPipeableStream(app(url), {
+      onAllReady() {
+        pipe(
+          new Writable({
+            write(chunk, _enc, cb) {
+              html += chunk.toString();
+              cb();
+            },
+            final(cb) {
+              resolve(html);
+              cb();
+            },
+          }),
+        );
+      },
+      onShellError: reject,
+      onError(err) {
+        reject(err);
+      },
+    });
+  });
+}
+
+function page(path, r, body) {
   const url = site + (path === '/' ? '/' : path);
-  let html = template
+  return template
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(r.title)}</title>`)
     .replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(r.description)}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`)
     .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${esc(r.title)}$2`)
     .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(r.description)}$2`)
-    .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`);
-  const body = `<div id="root"><main style="max-width:720px;margin:0 auto;padding:96px 24px;font-family:sans-serif"><h1>${esc(r.title)}</h1><p>${esc(r.description)}</p><nav><ul>${nav}</ul></nav></main></div>`;
-  html = html.replace('<div id="root"></div>', body);
-  return html;
+    .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`)
+    .replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 }
 
 for (const [path, r] of Object.entries(routes)) {
-  const html = render(path, r);
+  const html = page(path, r, await render(path));
   if (path === '/') {
     writeFileSync('dist/index.html', html);
   } else {
@@ -41,7 +79,9 @@ for (const [path, r] of Object.entries(routes)) {
   }
 }
 
-// 404 page for static hosts (SPA fallback still renders the right route)
+// Shell for client-only routes (e.g. /admin) and unknown URLs: the browser
+// renders them itself, so the HTML must not contain another page's markup.
+writeFileSync('dist/app.html', template);
 writeFileSync('dist/404.html', template);
 
 const today = new Date().toISOString().slice(0, 10);
@@ -53,4 +93,4 @@ const sitemap =
   `\n</urlset>\n`;
 writeFileSync('dist/sitemap.xml', sitemap);
 
-console.log(`Prerendered ${Object.keys(routes).length} pages + sitemap.xml`);
+console.log(`Prerendered ${Object.keys(routes).length} pages (full HTML) + sitemap.xml; preloading ${fonts.length} font files`);
