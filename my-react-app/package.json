@@ -1,33 +1,28 @@
 {
-  "name": "edakkom",
+  "name": "edakkom-com",
   "private": true,
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "react-router dev",
-    "start": "react-router dev",
-    "build": "react-router build",
-    "preview": "npx --yes serve build/client",
-    "typecheck": "react-router typegen && tsc",
-    "art": "node scripts/landscape.mjs"
+    "dev": "vite",
+    "build": "tsc -b && vite build && node scripts/prerender.mjs",
+    "preview": "vite preview",
+    "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
-    "@fontsource/noto-sans-malayalam": "^5.3.0",
-    "@fontsource/noto-serif-malayalam": "^5.3.0",
-    "@fontsource/poppins": "^5.3.0",
-    "@react-router/node": "^8.5.3",
-    "isbot": "^5.2.4",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "react-router": "^8.5.3"
+    "@supabase/supabase-js": "^2.119.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6"
   },
   "devDependencies": {
-    "@react-router/dev": "^8.5.3",
     "@tailwindcss/vite": "^4.3.5",
-    "@types/node": "^22",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
+    "@types/react": "^18.3.32",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.5",
     "typescript": "^5.9.3",
-    "vite": "^8.3.6"
+    "vite": "^6.4.6"
   }
 }

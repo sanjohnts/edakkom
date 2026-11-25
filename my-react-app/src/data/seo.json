@@ -1,0 +1,65 @@
+{
+  "site": "https://www.edakkom.com",
+  "routes": {
+    "/": {
+      "title": "Edakkom Town, Kannur, Kerala | History, Places, Photos & Local Directory",
+      "description": "Discover Edakkom (എടക്കോം / ഇടക്കോം), a town in Taliparamba taluk, Kannur, Kerala — a ward of Chapparappadava panchayat. History, churches, temples, mosques, schools, libraries, banks, clinics, old photos and culture."
+    },
+    "/history": {
+      "title": "History of Edakkom | എടക്കോം ചരിത്രം — Kannur, North Malabar",
+      "description": "History of Edakkom town, Kannur: Kolathunadu, British Malabar, freedom fighters of the area, settlers from Travancore (1942), Chapparappadava panchayat (1968) and Edakkom today."
+    },
+    "/timeline": {
+      "title": "Edakkom Timeline | Year-by-Year History of Edakkom, Kannur",
+      "description": "Year-by-year timeline of Edakkom and North Malabar — from Kolathunadu and the 1940 Morazha incident to Chapparappadava panchayat (1968), the 1985 bridge and the 2025 ward election."
+    },
+    "/geography": {
+      "title": "Edakkom Map & Location | PIN 670581, Taliparamba, Kannur",
+      "description": "Where is Edakkom? Map, PIN 670581, Edakkom ward of Chapparappadava panchayat, Taliparamba taluk. Neighbourhoods (Thazhe Edakkom, Eriam, Kanaramvayal, Mangara), roads, rivers, hills and distances."
+    },
+    "/culture": {
+      "title": "Culture & Traditions of Edakkom | Theyyam, Onam, Festivals — Kannur",
+      "description": "Theyyam, Karkidaka Theyyam, Onam pookkalam, church feasts, food and village traditions of Edakkom and North Malabar."
+    },
+    "/religious-places": {
+      "title": "Temples, Churches & Mosques in Edakkom, Kannur",
+      "description": "Churches, temples and mosques in and around Edakkom: Infant Jesus Church, St. Paul’s Malankara Church, St. Mary’s chapel Thazhe Edakkom, Thalavil temples, Bhagavathi and Muthappan temples, juma masjids."
+    },
+    "/education": {
+      "title": "Schools & Libraries in Edakkom, Kannur",
+      "description": "Schools, madrasas, colleges and reading rooms in and near Edakkom: Christ Nagar LP School, SV UP School Muthathy, Chapparappadava HSS, Public Library, Mahatma Vayanashala, Kanaramvayal Vanitha Library."
+    },
+    "/tourism": {
+      "title": "Places to Visit near Edakkom, Kannur | Tourism & Attractions",
+      "description": "Tourist places near Edakkom, Kannur: Paithalmala, Palakkayam Thattu, Kooveri bridge, Parassinikkadavu, Taliparamba temples, rivers and Theyyam season."
+    },
+    "/old-and-new": {
+      "title": "Old Edakkom vs New Edakkom | Then & Now Photographs",
+      "description": "Old and new Edakkom side by side — farming, roads, homes, schools and Theyyam then and now. Send us your old photographs of Edakkom."
+    },
+    "/people-development": {
+      "title": "People & Development of Edakkom | Transport, Health, Community",
+      "description": "People of Edakkom: freedom fighters of the area, the Edakkom ward of Chapparappadava panchayat, community stories, transport, healthcare and development."
+    },
+    "/gallery": {
+      "title": "Edakkom Photos | Old Photographs & Present-Day Gallery",
+      "description": "Photo gallery of Edakkom and North Malabar: historical photographs, village life, festivals, Theyyam, nature and development."
+    },
+    "/news": {
+      "title": "Edakkom News | Local Updates & Announcements",
+      "description": "Local news and announcements from Edakkom, Kannur — events, development, schools, festivals and community notices."
+    },
+    "/directory": {
+      "title": "Edakkom Town Directory | Banks, Clinics, Shops, Post Office & Contacts",
+      "description": "Edakkom town directory: post office (PIN 670581), Federal Bank and ATM, KSFE Edakom, Souhruda Medical Centre, dental clinic, supermarkets, restaurants, libraries, panchayat office and emergency numbers."
+    },
+    "/contribute": {
+      "title": "Share Your Photos & Stories | Contribute to edakkom.com",
+      "description": "Help build the digital archive of Edakkom. Send old photographs, family stories, memories and corrections."
+    },
+    "/about": {
+      "title": "About edakkom.com | The Story of Our Land",
+      "description": "About the edakkom.com project — a permanent digital memory of Edakkom, Kannur: our mission, sources, verification policy and contributors."
+    }
+  }
+}
