@@ -47,6 +47,50 @@ body {
 html[lang="ml"] body {
   font-family: var(--font-ml);
 }
+
+/* ——— Mobile fit ———
+   Malayalam words are long. Without these rules a single heading word, or a
+   grid column holding one, made pages wider than a phone, so the browser
+   zoomed the whole site out and let it slide sideways. */
+html,
+body {
+  overflow-x: clip; /* safety net; `clip` keeps sticky elements working */
+}
+body {
+  overflow-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
+}
+h1,
+h2,
+h3,
+.headline,
+.display {
+  overflow-wrap: anywhere; /* break a word only when it cannot fit at all */
+}
+/* Grid children may shrink below their longest word. */
+.grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 639px) {
+  /* Inputs under 16px make iPhones zoom in on focus. */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Phone-sized Malayalam headings, so long words fit on one line. */
+  html[lang="ml"] h1.headline {
+    font-size: clamp(2.1rem, 10.4vw, 2.9rem) !important;
+  }
+  html[lang="ml"] h2.headline {
+    font-size: clamp(1.65rem, 7.8vw, 2.3rem) !important;
+  }
+  html[lang="ml"] h3.headline {
+    font-size: clamp(1.35rem, 6.4vw, 1.75rem) !important;
+  }
+}
 html[lang="ml"] .font-serif,
 html[lang="ml"] .headline,
 html[lang="ml"] .display {

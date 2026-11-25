@@ -33,7 +33,7 @@ function LangToggle({ light }: { light?: boolean }) {
           key={l}
           onClick={() => setLang(l)}
           aria-pressed={lang === l}
-          className={`rounded-full px-2.5 py-1.5 transition-colors ${lang === l ? (light ? 'bg-ivory text-coal' : 'bg-coal text-ivory') : 'opacity-75 hover:opacity-100'}`}
+          className={`min-w-10 rounded-full px-2.5 py-2 transition-colors ${lang === l ? (light ? 'bg-ivory text-coal' : 'bg-coal text-ivory') : 'opacity-75 hover:opacity-100'}`}
         >
           {l === 'ml' ? 'മല' : 'EN'}
         </button>
@@ -124,7 +124,7 @@ function Menu({ open, onClose }: { open: boolean; onClose: () => void }) {
       >
         <div className="flex h-16 items-center justify-between px-6">
           <span className="label text-ink-faint">{t({ en: 'Explore the town', ml: 'പട്ടണം അറിയാം' })}</span>
-          <button onClick={onClose} className="rounded-full border border-ink/20 px-3.5 py-1.5 text-sm hover:bg-coal hover:text-ivory">
+          <button onClick={onClose} className="rounded-full border border-ink/20 px-4 py-2 text-sm hover:bg-coal hover:text-ivory">
             {t({ en: 'Close', ml: 'അടയ്ക്കുക' })} ✕
           </button>
         </div>
@@ -179,10 +179,10 @@ function Footer() {
             <Pill to="/contribute" className="mt-7">{t({ en: 'Share a memory', ml: 'ഓർമ പങ്കുവെക്കൂ' })}</Pill>
           </div>
           {[NAV.slice(0, 7), NAV.slice(7)].map((col, i) => (
-            <ul key={i} className="space-y-2.5 text-sm">
+            <ul key={i} className="space-y-0.5 text-sm">
               {col.map((n) => (
                 <li key={n.path}>
-                  <Link to={n.path} className="text-ink-soft transition-colors hover:text-ink">
+                  <Link to={n.path} className="inline-block py-1.5 text-ink-soft transition-colors hover:text-ink">
                     {t(n.label)}
                   </Link>
                 </li>

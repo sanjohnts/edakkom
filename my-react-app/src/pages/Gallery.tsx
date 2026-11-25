@@ -67,7 +67,7 @@ export default function Gallery() {
                 );
               })}
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {([
                 ['all', { en: 'Any era', ml: 'എല്ലാ കാലവും' }],
                 ['old', { en: 'Historical', ml: 'പഴയത്' }],

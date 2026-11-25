@@ -15,26 +15,28 @@ function HeroDisplay() {
     en: 'Churches, kavus and mosques, a busy junction and green laterite hills — the story of a North Malabar town.',
     ml: 'പള്ളികളും കാവുകളും മസ്ജിദുകളും, തിരക്കുള്ള കവലയും പച്ചപ്പുള്ള ചെങ്കൽക്കുന്നുകളും — ഒരു ഉത്തര മലബാർ പട്ടണത്തിന്റെ കഥ.',
   });
+  // On phones the h1 is a single column (flex + `contents` on the inner
+  // span), ordered so the sentence reads whole before the short blurb.
   if (lang === 'ml') {
     return (
-      <h1 className="display rise">
-        <span className="block text-[clamp(4rem,13vw,8.4rem)] leading-[1.05]">എടക്കോം</span>
-        <span className="mt-2 grid items-end gap-6 sm:grid-cols-[minmax(0,18rem)_1fr]">
-          <span className="order-2 max-w-xs font-sans text-[0.95rem] leading-relaxed text-ivory/85 sm:order-1">{blurb}</span>
-          <em className="order-1 text-[clamp(2rem,5.4vw,3.4rem)] leading-tight sm:order-2">ഉത്തര മലബാറിലെ</em>
+      <h1 className="display rise flex flex-col sm:block">
+        <span className="order-1 block text-[clamp(3.4rem,13vw,8.4rem)] leading-[1.05]">എടക്കോം</span>
+        <span className="contents sm:mt-2 sm:grid sm:grid-cols-[minmax(0,18rem)_1fr] sm:items-end sm:gap-6">
+          <span className="order-4 mt-6 max-w-xs font-sans text-[0.95rem] leading-relaxed text-ivory/85 sm:order-1 sm:mt-0">{blurb}</span>
+          <em className="order-2 mt-2 text-[clamp(1.75rem,5.4vw,3.4rem)] leading-tight sm:order-2 sm:mt-0">ഉത്തര മലബാറിലെ</em>
         </span>
-        <span className="mt-1 block text-[clamp(2.6rem,8vw,5.2rem)] leading-[1.1] sm:pl-[18rem]">ഒരു പട്ടണം.</span>
+        <span className="order-3 mt-1 block text-[clamp(2.2rem,8vw,5.2rem)] leading-[1.1] sm:pl-[18rem]">ഒരു പട്ടണം.</span>
       </h1>
     );
   }
   return (
-    <h1 className="display rise">
-      <span className="block text-[clamp(4.2rem,15vw,9.6rem)] uppercase">Edakkom</span>
-      <span className="mt-3 grid items-end gap-6 sm:grid-cols-[minmax(0,17rem)_1fr]">
-        <span className="order-2 max-w-xs font-sans text-[0.95rem] leading-relaxed text-ivory/85 sm:order-1">{blurb}</span>
-        <em className="order-1 text-[clamp(2.4rem,6.5vw,4.4rem)] leading-none sm:order-2">a town in</em>
+    <h1 className="display rise flex flex-col sm:block">
+      <span className="order-1 block text-[clamp(3.2rem,15vw,9.6rem)] uppercase">Edakkom</span>
+      <span className="contents sm:mt-3 sm:grid sm:grid-cols-[minmax(0,17rem)_1fr] sm:items-end sm:gap-6">
+        <span className="order-4 mt-6 max-w-xs font-sans text-[0.95rem] leading-relaxed text-ivory/85 sm:order-1 sm:mt-0">{blurb}</span>
+        <em className="order-2 mt-3 text-[clamp(2.1rem,6.5vw,4.4rem)] leading-none sm:order-2 sm:mt-0">a town in</em>
       </span>
-      <span className="mt-2 block text-[clamp(3.6rem,12vw,7.6rem)] uppercase sm:pl-[17rem]">Malabar.</span>
+      <span className="order-3 mt-2 block text-[clamp(2.9rem,12vw,7.6rem)] uppercase sm:pl-[17rem]">Malabar.</span>
     </h1>
   );
 }
@@ -104,7 +106,7 @@ export default function Home() {
             </p>
           )}
           <div className="absolute inset-0 bg-gradient-to-r from-coal/75 via-coal/35 to-coal/10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-coal/60 via-transparent to-coal/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-coal/85 via-coal/30 to-coal/40 sm:from-coal/60 sm:via-transparent" />
           <Container className="relative pt-28 pb-10 sm:pb-14">
             <p className="label text-ivory/80">{t({ en: 'Kannur · Taliparamba · PIN 670581', ml: 'കണ്ണൂർ · തളിപ്പറമ്പ് · 670581' })}</p>
             <div className="mt-6">
