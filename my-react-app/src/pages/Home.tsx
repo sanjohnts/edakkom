@@ -49,8 +49,9 @@ function ShareForm() {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const d = new FormData(e.currentTarget);
-    const q = new URLSearchParams({ name: String(d.get('name') || ''), contact: String(d.get('contact') || ''), type });
-    navigate(`/contribute?${q.toString()}`);
+    // Hand the details over in router state, never in the URL: page URLs are
+    // recorded by Google Analytics, and names and phone numbers must not be.
+    navigate('/contribute', { state: { name: String(d.get('name') || ''), contact: String(d.get('contact') || ''), type } });
   };
   const field = 'glass w-full rounded-full px-5 pt-6 pb-2.5 text-[0.95rem] text-ivory placeholder:text-ivory/45 outline-none focus:border-ivory/60';
   return (

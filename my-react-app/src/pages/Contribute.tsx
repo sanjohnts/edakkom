@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useLang, type L } from '../lib/i18n';
 import { useSeo } from '../lib/seo';
 import { isBackendConnected, PHOTO_BUCKET, supabase } from '../lib/supabase';
@@ -21,8 +21,11 @@ const MAX_MB = 10;
 export default function Contribute() {
   useSeo('/contribute');
   const { t, lang } = useLang();
+  // Name and contact arrive from the homepage form in router state (kept out of
+  // the URL so analytics never sees them); ?type= alone is fine in a link.
+  const prefill = (useLocation().state ?? {}) as { name?: string; contact?: string; type?: string };
   const [params] = useSearchParams();
-  const [type, setType] = useState(() => params.get('type') || 'photo');
+  const [type, setType] = useState(() => prefill.type || params.get('type') || 'photo');
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
   const [error, setError] = useState('');
 
@@ -155,11 +158,11 @@ export default function Contribute() {
                 <div className="grid gap-6 sm:grid-cols-2">
                   <label className="block">
                     <span className="label text-ink-faint">{t({ en: 'Your name', ml: 'നിങ്ങളുടെ പേര്' })} *</span>
-                    <input name="name" required defaultValue={params.get('name') ?? ''} className={`${field} mt-2`} autoComplete="name" />
+                    <input name="name" required defaultValue={prefill.name ?? ''} className={`${field} mt-2`} autoComplete="name" />
                   </label>
                   <label className="block">
                     <span className="label text-ink-faint">{t({ en: 'Phone or email (private)', ml: 'ഫോൺ / ഇമെയിൽ (സ്വകാര്യം)' })} *</span>
-                    <input name="contact" required defaultValue={params.get('contact') ?? ''} className={`${field} mt-2`} />
+                    <input name="contact" required defaultValue={prefill.contact ?? ''} className={`${field} mt-2`} />
                   </label>
                 </div>
 
