@@ -1,6 +1,6 @@
 import { useLang } from '../lib/i18n';
 import { useSeo } from '../lib/seo';
-import { CONTACT, SOURCES, STATUS_HELP, STATUS_LABEL, type Status } from '../data/site';
+import { CONTACT, SOURCES, STATUS_HELP, STATUS_LABEL, instagramUrl, type Status } from '../data/site';
 import { Container, Label, Pill, Reveal, StatusBadge } from '../components/ui';
 import { PageHero, SectionHead } from '../components/sections';
 
@@ -107,6 +107,7 @@ export default function About() {
           <div className="flex flex-wrap gap-3 lg:justify-end">
             {CONTACT.email && <Pill href={`mailto:${CONTACT.email}`} tone="bone">{CONTACT.email}</Pill>}
             {CONTACT.whatsapp && <Pill href={`https://wa.me/${CONTACT.whatsapp}`} tone="bone">WhatsApp</Pill>}
+            {CONTACT.instagram && <Pill href={instagramUrl(CONTACT.instagram)} tone="bone">Instagram · @{CONTACT.instagram}</Pill>}
             <Pill to="/contribute" tone="ivory">{t({ en: 'Contribute', ml: 'സംഭാവന ചെയ്യൂ' })}</Pill>
           </div>
         </Container>

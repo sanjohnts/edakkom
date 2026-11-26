@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useLang, type L } from '../lib/i18n';
-import { NAV } from '../data/site';
+import { CONTACT, NAV, instagramUrl } from '../data/site';
 import { ArrowDot, Container, Pill } from './ui';
 import { AdArea } from './AdArea';
 import { Partners } from './Partners';
@@ -165,6 +165,17 @@ function Menu({ open, onClose }: { open: boolean; onClose: () => void }) {
   );
 }
 
+/** Outline camera glyph for the Instagram link. */
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden className="size-5 shrink-0">
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 function Footer() {
   const { t } = useLang();
   return (
@@ -181,6 +192,19 @@ function Footer() {
               })}
             </p>
             <Pill to="/contribute" className="mt-7">{t({ en: 'Share a memory', ml: 'ഓർമ പങ്കുവെക്കൂ' })}</Pill>
+            {CONTACT.instagram && (
+              <a
+                href={instagramUrl(CONTACT.instagram)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 flex w-fit items-center gap-2.5 py-1 text-sm text-ink-soft transition-colors hover:text-ink"
+              >
+                <InstagramIcon />
+                <span>
+                  {t({ en: 'Follow us on Instagram', ml: 'ഇൻസ്റ്റഗ്രാമിൽ പിന്തുടരൂ' })} · <span className="font-medium text-ink">@{CONTACT.instagram}</span>
+                </span>
+              </a>
+            )}
           </div>
           {[NAV.slice(0, 7), NAV.slice(7)].map((col, i) => (
             <ul key={i} className="space-y-0.5 text-sm">

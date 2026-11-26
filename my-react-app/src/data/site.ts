@@ -162,4 +162,8 @@ export const SOURCES: { title: string; url: string; note: L }[] = [
 export const CONTACT = {
   email: '', // e.g. hello@edakkom.com
   whatsapp: '', // e.g. 919xxxxxxxxx (country code, no +)
+  instagram: 'edakkom_com', // Instagram username, without the @
 };
+
+/** Link to the project's Instagram profile. */
+export const instagramUrl = (username: string) => `https://www.instagram.com/${username}/`;
