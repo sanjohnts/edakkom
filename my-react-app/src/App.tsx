@@ -3,22 +3,50 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import Home from './pages/Home';
 
-const History = lazy(() => import('./pages/History'));
-const Timeline = lazy(() => import('./pages/Timeline'));
-const Geography = lazy(() => import('./pages/Geography'));
-const Culture = lazy(() => import('./pages/Culture'));
-const Religious = lazy(() => import('./pages/Religious'));
-const Education = lazy(() => import('./pages/Education'));
-const Tourism = lazy(() => import('./pages/Tourism'));
-const OldNew = lazy(() => import('./pages/OldNew'));
-const PeopleDev = lazy(() => import('./pages/PeopleDev'));
-const Gallery = lazy(() => import('./pages/Gallery'));
-const News = lazy(() => import('./pages/News'));
-const Directory = lazy(() => import('./pages/Directory'));
-const Contribute = lazy(() => import('./pages/Contribute'));
-const About = lazy(() => import('./pages/About'));
+// Every page except Home is its own small file, fetched when first needed.
+const pages = {
+  History: () => import('./pages/History'),
+  Timeline: () => import('./pages/Timeline'),
+  Geography: () => import('./pages/Geography'),
+  Culture: () => import('./pages/Culture'),
+  Religious: () => import('./pages/Religious'),
+  Education: () => import('./pages/Education'),
+  Tourism: () => import('./pages/Tourism'),
+  OldNew: () => import('./pages/OldNew'),
+  PeopleDev: () => import('./pages/PeopleDev'),
+  Gallery: () => import('./pages/Gallery'),
+  News: () => import('./pages/News'),
+  Directory: () => import('./pages/Directory'),
+  Contribute: () => import('./pages/Contribute'),
+  About: () => import('./pages/About'),
+  NotFound: () => import('./pages/NotFound'),
+};
+
+/**
+ * Fetch every page's file in the background (main.tsx calls this once the
+ * first page has finished loading), so tapping a link switches pages at once
+ * instead of waiting on the network. The admin page is left out.
+ */
+export function preloadPages() {
+  for (const load of Object.values(pages)) load().catch(() => {});
+}
+
+const History = lazy(pages.History);
+const Timeline = lazy(pages.Timeline);
+const Geography = lazy(pages.Geography);
+const Culture = lazy(pages.Culture);
+const Religious = lazy(pages.Religious);
+const Education = lazy(pages.Education);
+const Tourism = lazy(pages.Tourism);
+const OldNew = lazy(pages.OldNew);
+const PeopleDev = lazy(pages.PeopleDev);
+const Gallery = lazy(pages.Gallery);
+const News = lazy(pages.News);
+const Directory = lazy(pages.Directory);
+const Contribute = lazy(pages.Contribute);
+const About = lazy(pages.About);
+const NotFound = lazy(pages.NotFound);
 const Admin = lazy(() => import('./admin/Admin'));
-const NotFound = lazy(() => import('./pages/NotFound'));
 
 export default function App() {
   return (

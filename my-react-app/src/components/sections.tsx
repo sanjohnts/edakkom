@@ -217,7 +217,12 @@ export function PhotoCarousel({ photos, no, label, plain, italic }: { photos: Ph
         {photos.map((p) => (
           <figure key={p.id} className="w-[80vw] shrink-0 snap-start sm:w-[46vw] lg:w-[30vw]">
             <div className="relative aspect-[4/4.4] overflow-hidden rounded-[var(--radius-card)] bg-bone-2">
-              <Photo src={p.src} alt={t(p.title)} className="size-full object-cover transition-transform duration-[1.2s] hover:scale-[1.03]" />
+              <Photo
+                src={p.src}
+                alt={t(p.title)}
+                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 80vw"
+                className="size-full object-cover transition-transform duration-[1.2s] hover:scale-[1.03]"
+              />
               <span className="absolute top-3 left-3"><StatusBadge status={p.status} /></span>
             </div>
             <figcaption className="mt-4">
@@ -293,7 +298,7 @@ export function Lightbox({ photos, index, onClose, onIndex }: { photos: PhotoT[]
   const p = photos[index];
   const nav = 'absolute flex size-11 items-center justify-center rounded-full bg-ivory/90 text-coal hover:bg-ivory';
   return (
-    <div className="fixed inset-0 z-[55] flex flex-col bg-coal/95 text-ivory backdrop-blur" role="dialog" aria-modal="true" aria-label={t(p.title)}>
+    <div className="fixed inset-0 z-[55] flex flex-col bg-coal/95 text-ivory lg:backdrop-blur" role="dialog" aria-modal="true" aria-label={t(p.title)}>
       <div className="flex items-center justify-between p-4 sm:p-6">
         <span className="text-sm tabular-nums text-ivory/60">
           {String(index + 1).padStart(2, '0')} / {String(photos.length).padStart(2, '0')}

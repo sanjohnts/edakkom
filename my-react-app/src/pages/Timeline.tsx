@@ -47,7 +47,7 @@ export default function Timeline() {
 
       <section className="py-16 sm:py-24">
         <Container>
-          <div className="sticky top-16 z-20 -mx-5 flex gap-2 overflow-x-auto bg-bone/90 px-5 py-4 backdrop-blur no-scrollbar sm:mx-0 sm:px-0">
+          <div className="sticky top-16 z-20 -mx-5 flex gap-2 overflow-x-auto bg-bone/95 px-5 py-4 no-scrollbar lg:bg-bone/90 lg:backdrop-blur sm:mx-0 sm:px-0">
             {filters.map((f) => (
               <button
                 key={f.id}

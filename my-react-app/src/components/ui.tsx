@@ -15,12 +15,19 @@ export function Label({ no, children, className = '' }: { no?: string; children:
   );
 }
 
-/** Fades content up when it scrolls into view. */
+/**
+ * Fades content up when it scrolls into view. Content starts visible (so the
+ * prerendered page is never blank while the JavaScript loads); only blocks
+ * that are still below the screen when the page starts are hidden and faded in.
+ */
 export function Reveal({ children, as: Tag = 'div', className = '', delay = 0 }: { children: ReactNode; as?: ElementType; className?: string; delay?: number }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || !('IntersectionObserver' in window)) return;
+    // Already on screen, or scrolled past: leave it as it is.
+    if (el.getBoundingClientRect().top < window.innerHeight) return;
+    el.classList.add('reveal-armed');
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -28,7 +35,7 @@ export function Reveal({ children, as: Tag = 'div', className = '', delay = 0 }:
           io.disconnect();
         }
       },
-      { rootMargin: '0px 0px -8% 0px' },
+      { rootMargin: '0px 0px -40px 0px' },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -146,7 +153,10 @@ export function Photo({
   fallback,
   archival,
   eager,
-  sizes = '100vw',
+  // On phones every photo sits inside the page's side padding, so it is at
+  // most the screen width minus 24px. Saying so lets a typical phone take the
+  // 1024px file instead of the 1600px one (often a third of the size).
+  sizes = '(max-width: 640px) calc(100vw - 24px), 100vw',
 }: {
   src: string;
   alt: string;

@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useLang, type L } from '../lib/i18n';
 import { NAV } from '../data/site';
@@ -55,8 +55,10 @@ function Header({ onMenu }: { onMenu: () => void }) {
   return (
     <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-4 sm:pt-4">
       <div
-        className={`mx-auto flex h-16 max-w-[1480px] items-center justify-between gap-3 rounded-full px-4 transition-all duration-500 sm:px-6 ${
-          scrolled ? 'bg-bone/85 shadow-[0_8px_30px_-12px_rgba(24,26,16,0.25)] backdrop-blur-md' : 'bg-transparent'
+        // The blur behind the header is redrawn on every scroll frame, so only
+        // large screens get it; phones get a near-solid background instead.
+        className={`mx-auto flex h-16 max-w-[1480px] items-center justify-between gap-3 rounded-full px-4 transition-[background-color,box-shadow] duration-300 sm:px-6 ${
+          scrolled ? 'bg-bone/95 shadow-[0_8px_30px_-12px_rgba(24,26,16,0.25)] lg:bg-bone/85 lg:backdrop-blur-md' : 'bg-transparent'
         }`}
       >
         <Wordmark light={light} />
@@ -115,7 +117,7 @@ function Menu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
   return (
     <div className={`fixed inset-0 z-50 ${open ? '' : 'pointer-events-none'}`} aria-hidden={!open}>
-      <div onClick={onClose} className={`absolute inset-0 bg-coal/50 backdrop-blur-sm transition-opacity duration-500 ${open ? 'opacity-100' : 'opacity-0'}`} />
+      <div onClick={onClose} className={`absolute inset-0 bg-coal/60 transition-opacity duration-500 lg:bg-coal/50 lg:backdrop-blur-sm ${open ? 'opacity-100' : 'opacity-0'}`} />
       <nav
         className={`absolute inset-y-3 right-3 flex w-[calc(100%-1.5rem)] max-w-[500px] flex-col overflow-hidden rounded-[var(--radius-card)] bg-bone text-ink shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${
           open ? 'translate-x-0' : 'translate-x-[110%]'
@@ -205,11 +207,21 @@ function Footer() {
   );
 }
 
+// useLayoutEffect warns during the build-time prerender; it only matters in the browser.
+const useBrowserLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+
 export function Layout({ children }: { children: ReactNode }) {
   const [menu, setMenu] = useState(false);
   const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  const shownPath = useRef(pathname);
+  // Start each new page at the top: instantly (the site-wide smooth scrolling
+  // would otherwise glide up through the new page), before the page paints,
+  // and not when the site first opens, when the visitor may already have
+  // scrolled the page while it was loading.
+  useBrowserLayoutEffect(() => {
+    if (shownPath.current === pathname) return;
+    shownPath.current = pathname;
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [pathname]);
   return (
     <>

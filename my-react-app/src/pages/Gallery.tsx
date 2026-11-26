@@ -54,7 +54,7 @@ export default function Gallery() {
 
       <section className="py-14 sm:py-20">
         <Container>
-          <div className="sticky top-16 z-20 -mx-5 space-y-2 bg-bone/90 px-5 py-4 backdrop-blur sm:mx-0 sm:px-0">
+          <div className="sticky top-16 z-20 -mx-5 space-y-2 bg-bone/95 px-5 py-4 sm:mx-0 lg:bg-bone/90 lg:backdrop-blur sm:px-0">
             <div className="no-scrollbar flex gap-2 overflow-x-auto">
               <button className={chip(cat === 'all')} onClick={() => setCat('all')}>{t({ en: 'All', ml: 'എല്ലാം' })} · {photos.length}</button>
               {CATEGORIES.map((c) => {

@@ -169,15 +169,18 @@ html[lang="ml"] .prose-edakkom li {
   color: var(--color-lime-ink);
 }
 
-/* Scroll reveal */
-.reveal {
+/* Scroll reveal. Blocks are visible in the page's HTML, so a phone shows the
+   whole page before the JavaScript arrives. Once it runs, it hides only the
+   blocks still below the screen (`reveal-armed`) and fades each one in as it
+   scrolls into view. Hiding is instant; only the fade-in is animated. */
+.reveal-armed {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(16px);
 }
-.reveal.is-visible {
+.reveal-armed.is-visible {
   opacity: 1;
   transform: none;
+  transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 @keyframes slow-zoom {
@@ -206,7 +209,8 @@ html[lang="ml"] .prose-edakkom li {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal-armed,
+  .reveal-armed.is-visible {
     opacity: 1;
     transform: none;
     transition: none;
@@ -234,6 +238,15 @@ html[lang="ml"] .prose-edakkom li {
   background: color-mix(in srgb, var(--color-coal) 45%, transparent);
   border: 1px solid color-mix(in srgb, var(--color-ivory) 22%, transparent);
   backdrop-filter: blur(10px);
+}
+/* Blurring what sits behind an element is costly on phones, above all for the
+   fixed header while the page scrolls. Phones get a slightly darker tint
+   instead, which looks almost the same over the dark photos. */
+@media (max-width: 1023px) {
+  .glass {
+    backdrop-filter: none;
+    background: color-mix(in srgb, var(--color-coal) 55%, transparent);
+  }
 }
 
 /* Masonry gallery */
