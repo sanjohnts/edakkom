@@ -269,6 +269,24 @@ html[lang="ml"] .prose-edakkom li {
   margin-bottom: 1rem;
 }
 
+/* Ad areas (components/AdArea.tsx) stay collapsed — no gap, no label —
+   until Google marks the ad as filled, e.g. none show before AdSense approval.
+   Google holds space open while an ad loads, so the area is clipped to zero
+   height (it keeps its width, which Google needs to pick an ad size). */
+.ad-area:not(:has(ins[data-ad-status="filled"])) {
+  height: 0;
+  overflow: hidden;
+}
+.ad-area .ad-label {
+  display: none;
+}
+.ad-area:has(ins[data-ad-status="filled"]) {
+  padding-block: 1.5rem 3rem;
+}
+.ad-area:has(ins[data-ad-status="filled"]) .ad-label {
+  display: block;
+}
+
 .no-scrollbar {
   scrollbar-width: none;
 }

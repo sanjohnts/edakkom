@@ -9,6 +9,7 @@ import { NEWS, PAIRS } from '../data/culture';
 import { DIRECTORY, LIBRARIES, RELIGIOUS } from '../data/places';
 import { Container, Headline, Label, Photo, Pill, Reveal } from '../components/ui';
 import { BeforeAfter, CardGrid, LimeCta, PhotoCarousel, SectionHead, SplitPanel, StatRow, Steps } from '../components/sections';
+import { AdArea } from '../components/AdArea';
 
 function HeroDisplay() {
   const { t, lang } = useLang();
@@ -189,6 +190,8 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      <AdArea />
 
       {/* ——— In town today ——— */}
       <SplitPanel photo="health-centre">

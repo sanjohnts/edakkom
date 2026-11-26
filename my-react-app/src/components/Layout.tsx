@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useLang, type L } from '../lib/i18n';
 import { NAV } from '../data/site';
 import { ArrowDot, Container, Pill } from './ui';
+import { AdArea } from './AdArea';
 
 const PRIMARY: { path: string; label: L }[] = [
   { path: '/history', label: { en: 'History', ml: 'ചരിത്രം' } },
@@ -231,6 +232,8 @@ export function Layout({ children }: { children: ReactNode }) {
       <Header onMenu={() => setMenu(true)} />
       <Menu open={menu} onClose={() => setMenu(false)} />
       <main id="main">{children}</main>
+      {/* Keyed by page, so each page asks Google for its own ad. */}
+      {pathname !== '/admin' && <AdArea key={pathname} />}
       <Footer />
     </>
   );
