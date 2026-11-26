@@ -170,7 +170,6 @@ function Footer() {
   return (
     <footer className="bg-bone text-ink">
       <Container className="pt-20">
-        <Partners />
         <div className="grid gap-12 border-t border-ink/15 pt-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <p className="font-serif text-4xl" style={{ fontFamily: 'Playfair Display, serif' }}>Edakkom</p>
@@ -200,6 +199,7 @@ function Footer() {
             Edakkom<span className="text-lime-ink">.</span>
           </p>
         </div>
+        <Partners />
         <div className="flex flex-wrap justify-between gap-3 border-t border-ink/15 py-6 text-xs text-ink-faint">
           <span>© {new Date().getFullYear()} edakkom.com</span>
           <span>{t({ en: 'Edakkom · Taliparamba · Kannur · Kerala · 670581', ml: 'എടക്കോം · തളിപ്പറമ്പ് · കണ്ണൂർ · കേരളം · 670581' })}</span>
