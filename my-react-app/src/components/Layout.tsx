@@ -4,6 +4,7 @@ import { useLang, type L } from '../lib/i18n';
 import { NAV } from '../data/site';
 import { ArrowDot, Container, Pill } from './ui';
 import { AdArea } from './AdArea';
+import { Partners } from './Partners';
 
 const PRIMARY: { path: string; label: L }[] = [
   { path: '/history', label: { en: 'History', ml: 'ചരിത്രം' } },
@@ -169,6 +170,7 @@ function Footer() {
   return (
     <footer className="bg-bone text-ink">
       <Container className="pt-20">
+        <Partners />
         <div className="grid gap-12 border-t border-ink/15 pt-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <p className="font-serif text-4xl" style={{ fontFamily: 'Playfair Display, serif' }}>Edakkom</p>
