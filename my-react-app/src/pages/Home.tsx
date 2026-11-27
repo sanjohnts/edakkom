@@ -10,6 +10,7 @@ import { DIRECTORY, LIBRARIES, RELIGIOUS } from '../data/places';
 import { Container, Headline, Label, Photo, Pill, Reveal } from '../components/ui';
 import { BeforeAfter, CardGrid, LimeCta, PhotoCarousel, SectionHead, SplitPanel, StatRow, Steps } from '../components/sections';
 import { AdArea } from '../components/AdArea';
+import { WeatherCard, WeatherChip } from '../components/Weather';
 
 function HeroDisplay() {
   const { t, lang } = useLang();
@@ -129,7 +130,10 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-coal/75 via-coal/35 to-coal/10" />
           <div className="absolute inset-0 bg-gradient-to-t from-coal/85 via-coal/30 to-coal/40 sm:from-coal/60 sm:via-transparent" />
           <Container className="relative pt-28 pb-10 sm:pb-14">
-            <p className="label text-ivory/80">{t({ en: 'Kannur · Taliparamba · PIN 670581', ml: 'കണ്ണൂർ · തളിപ്പറമ്പ് · 670581' })}</p>
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+              <p className="label text-ivory/80">{t({ en: 'Kannur · Taliparamba · PIN 670581', ml: 'കണ്ണൂർ · തളിപ്പറമ്പ് · 670581' })}</p>
+              <WeatherChip />
+            </div>
             <div className="mt-6">
               <HeroDisplay />
             </div>
@@ -187,6 +191,9 @@ export default function Home() {
                 { value: String(PHOTOS.length), label: { en: 'photos archived', ml: 'ആർക്കൈവിലെ ഫോട്ടോകൾ' }, note: { en: 'and growing', ml: 'ഇനിയും കൂടും' } },
               ]}
             />
+          </div>
+          <div className="mt-16">
+            <WeatherCard />
           </div>
         </Container>
       </section>
