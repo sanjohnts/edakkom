@@ -69,7 +69,19 @@ export const FACTS: Fact[] = [
     },
     status: 'directory',
   },
-  { label: { en: 'Assembly / Lok Sabha', ml: 'നിയമസഭ / ലോക്സഭ' }, value: { en: 'Taliparamba / Kannur', ml: 'തളിപ്പറമ്പ് / കണ്ണൂർ' }, status: 'directory' },
+  // Village directories list Edakkom under Panapuzha, but Chapparappadava's own
+  // revenue villages are Kooveri, Thimiri and Vellad — so this needs checking.
+  { label: { en: 'Revenue village', ml: 'റവന്യൂ വില്ലേജ്' }, value: { en: 'Listed under Panapuzha in public village directories', ml: 'പൊതു വില്ലേജ് ഡയറക്ടറികളിൽ പാണപ്പുഴയ്ക്കു കീഴിൽ' }, status: 'to-verify' },
+  {
+    label: { en: 'Assembly constituency', ml: 'നിയമസഭാ മണ്ഡലം' },
+    value: { en: 'Taliparamba — MLA T. K. Govindan Master (elected May 2026)', ml: 'തളിപ്പറമ്പ് — എം.എൽ.എ. ടി.കെ. ഗോവിന്ദൻ മാസ്റ്റർ (2026 തിരഞ്ഞെടുപ്പ്)' },
+    status: 'directory',
+  },
+  {
+    label: { en: 'Lok Sabha constituency', ml: 'ലോക്സഭാ മണ്ഡലം' },
+    value: { en: 'Kannur — MP K. Sudhakaran (elected 2024)', ml: 'കണ്ണൂർ — എം.പി. കെ. സുധാകരൻ (2024 തിരഞ്ഞെടുപ്പ്)' },
+    status: 'directory',
+  },
   { label: { en: 'PIN code', ml: 'പിൻ കോഡ്' }, value: { en: '670581', ml: '670581' }, status: 'verified' },
   {
     label: { en: 'Post office', ml: 'പോസ്റ്റ് ഓഫീസ്' },
@@ -82,6 +94,9 @@ export const FACTS: Fact[] = [
     status: 'directory',
   },
   { label: { en: 'Coordinates', ml: 'അക്ഷാംശം, രേഖാംശം' }, value: { en: '≈ 12.146° N, 75.402° E', ml: '≈ 12.146° വ, 75.402° കി' }, status: 'directory' },
+  // From terrain data (Open-Meteo elevation, Copernicus DEM) at the coordinates above.
+  // Some village directories say 13 m, which does not fit this hilly midland town.
+  { label: { en: 'Elevation', ml: 'ഉയരം' }, value: { en: '≈ 84 m above sea level', ml: 'സമുദ്രനിരപ്പിൽ നിന്ന് ≈ 84 മീ.' }, status: 'directory' },
   { label: { en: 'Nearest towns', ml: 'അടുത്ത പട്ടണങ്ങൾ' }, value: { en: 'Chapparappadava (≈ 2–3.5 km) · Taliparamba (≈ 14 km)', ml: 'ചപ്പാരപ്പടവ് (≈ 2–3.5 കി.മീ.) · തളിപ്പറമ്പ് (≈ 14 കി.മീ.)' }, status: 'directory' },
   { label: { en: 'From Kannur town', ml: 'കണ്ണൂർ നഗരത്തിൽ നിന്ന്' }, value: { en: 'About 35 km north', ml: 'ഏകദേശം 35 കി.മീ. വടക്ക്' }, status: 'directory' },
   { label: { en: 'Nearest railway station', ml: 'അടുത്ത റെയിൽവേ സ്റ്റേഷൻ' }, value: { en: 'Payyanur (about 17 km)', ml: 'പയ്യന്നൂർ (ഏകദേശം 17 കി.മീ.)' }, status: 'directory' },
@@ -119,7 +134,17 @@ export const SOURCES: { title: string; url: string; note: L }[] = [
   {
     title: 'onefivenine — Edakkom village page',
     url: 'https://www.onefivenine.com/india/villages/Kannur/Payyannur/Edakkom',
-    note: { en: 'Distances, nearby schools, temples, health centres, ATMs', ml: 'ദൂരങ്ങൾ, സ്കൂളുകൾ, ക്ഷേത്രങ്ങൾ, ആരോഗ്യകേന്ദ്രങ്ങൾ, എ.ടി.എം.' },
+    note: { en: 'Distances, nearby schools, temples, health centres, ATMs; lists Edakkom under Panapuzha village', ml: 'ദൂരങ്ങൾ, സ്കൂളുകൾ, ക്ഷേത്രങ്ങൾ, ആരോഗ്യകേന്ദ്രങ്ങൾ, എ.ടി.എം.; എടക്കോമിനെ പാണപ്പുഴ വില്ലേജിൽ ഉൾപ്പെടുത്തുന്നു' },
+  },
+  {
+    title: 'Onmanorama — Taliparamba result, Kerala Assembly election 2026',
+    url: 'https://www.onmanorama.com/news/kerala/2026/05/04/kerala-assembly-elections-2026-taliparamba-constituency.html',
+    note: { en: 'T. K. Govindan Master elected MLA for Taliparamba, May 2026', ml: 'ടി.കെ. ഗോവിന്ദൻ മാസ്റ്റർ തളിപ്പറമ്പ് എം.എൽ.എ., 2026 മേയ്' },
+  },
+  {
+    title: 'Wikipedia — Kannur Lok Sabha constituency',
+    url: 'https://en.wikipedia.org/wiki/Kannur_(Lok_Sabha_constituency)',
+    note: { en: 'K. Sudhakaran, elected MP in 2024', ml: 'കെ. സുധാകരൻ, 2024-ൽ എം.പി.' },
   },
   {
     title: 'onefivenine — PIN 670581',
